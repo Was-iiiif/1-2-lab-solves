@@ -1,0 +1,107 @@
+/*Write a C++ program using the concept of class and object.
+Define a class Point that represents a point in a 2D plane.
+
+Each point has two coordinates: x and y (Private member).
+
+Use a member function to set the values of x and y.
+
+Then, define another class Triangle that represents a triangle in a 2D plane.
+
+Triangle should have three Point objects as private members.
+
+Use getter and setter function to set and display the three points of the triangle.
+
+Write a member function to calculate the area of the triangle.
+
+The program should read three points from the user, create three Point objects and a Triangle object, set its points, display the points, and display the area.
+
+Input:
+Enter coordinates of first point: 0 0
+Enter coordinates of second point: 4 0
+Enter coordinates of third point: 0 3
+
+Output:
+Points of Triangle:
+P1(0, 0), P2(4, 0), P3(0, 3)
+Area of Triangle = 6.00*/
+
+
+#include<bits/stdc++.h>
+using namespace std;
+class point{
+    double x,y;
+public:
+    void set_val(double a, double b){
+        x=a;
+        y=b;
+    }
+    double getx(){
+        return x;
+    }
+    double gety(){
+        return y;
+    }
+    void display(){
+        cout<<"("<<x<<", "<<y<<") ";
+    }
+};
+
+class triangle{
+    point p1,p2,p3;
+public:
+    point get_p1(){
+        return p1;
+    }
+    point get_p2(){
+        return p2;
+    }
+    point get_p3(){
+        return p3;
+    }
+    void set_p(point a, point b, point c){
+        p1=a;
+        p2=b;
+        p3=c;
+    }
+    double area(point p1, point p2, point p3)
+    {
+        return abs(0.5*(p1.getx()*p2.gety()+ p2.getx()*p3.gety()+p3.getx()*p1.gety()-p1.getx()*p3.gety()-p3.getx()*p2.gety()-p2.getx()*p1.gety()));
+    }
+    void dp(point p1, point p2, point p3){
+        cout<< "p1";
+        p1.display();
+        cout<< "p2";
+        p2.display();
+        cout<< "p3";
+        p3.display();
+    }
+};
+
+int main()
+{
+    point p1, p2, p3;
+    triangle t1;
+    double a,b,c,d,e,f;
+    cout<<"Enter First Point:";
+    cin>>a>>b;
+    cout<<"Enter Second Point:";
+    cin>>c>>d;
+    cout<<"Enter Third Point:";
+    cin>>e>>f;
+    p1.set_val(a,b);
+    p2.set_val(c,d);
+    p3.set_val(e,f);
+    t1.set_p(p1,p2,p3);
+    double M=t1.area(p1, p2, p3);
+    cout<<"Points of triangle:"<<endl;
+    t1.dp(p1,p2,p3);
+    cout<<"Area of triangle= ";
+    cout<<M;
+
+}
+
+
+
+
+
+
