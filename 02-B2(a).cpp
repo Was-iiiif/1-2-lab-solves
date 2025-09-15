@@ -1,90 +1,48 @@
-/*Create a Matrix in C++ class that:
-Uses a parameterized constructor to dynamically allocate a 2D matrix of size r × c.
-Implements a copy constructor for deep copying.
-Uses a destructor to deallocate memory and print a message.
-Uses a static counter to track the number of active matrices.*/
-
+/*Create a MemoryBlock class in c++:
+The constructor allocates a dynamic memory block of size n.
+A static variable tracks the total allocated memory across all objects.
+Use the destructor to free memory and update total usage.
+Include a static function showMemoryUsage() to display the current total memory.*/
 #include<bits/stdc++.h>
 using namespace std;
-class Matrix{
-    int **mat;
-    int row;
-    int col;
-    static int count_mat;
+class MemoryBlock{
+    int *block;
+    int s;
+    static int total;
 public:
-    Matrix(int a, int b)
+    MemoryBlock(int n)
     {
-        row=a;
-        col=b;
-        mat=new int *[row];
-        for(int i=0; i<row; i++)
-            mat[i]=new int[col];
-        for(int i=0; i<row; i++)
-        {
-            for(int j=0; j<col; j++)
-            {
-                mat[i][j]=0;
-            }
-        }
-        count_mat++;
-        cout<<"Matrix Created"<<endl<<"Active Matrix count: "<<count_mat<<endl;
+        s=n;
+        block=new int[s];
+        total+=s*sizeof(int);
+        cout<<"Memory block successfully created"<<endl;
+
 
     }
-    Matrix(Matrix &x)
+    ~MemoryBlock()
     {
-        row=x.row;
-        col=x.col;
-        mat=new int *[row];
-        for(int i=0; i<row; i++)
-            mat[i]=new int[col];
-        for(int i=0; i<row; i++)
-        {
-            for(int j=0; j<col; j++)
-            {
-                mat[i][j]=x.mat[i][j];
-            }
-        }
-        count_mat++;
-        cout<<"Copy Matrix Created"<<endl<<"Active Matrix count: "<<count_mat<<endl;
+        delete[]block;
+        total-=s*sizeof(int);
+        cout<<"Memory block successfully deleted"<<endl<<"Current size: "<<total<<" Bytes"<<endl;
     }
-    ~Matrix()
+    static void showMemoryUsage()
     {
-        for(int i=0; i<row; i++)
-            delete[]mat[i];
-        delete[]mat;
-        count_mat--;
-        cout<<"Matrix Deleted"<<endl<<"Active Matrix count: "<<count_mat<<endl;
-    }
-    void input()
-    {
-        cout<<"Enter elements:"<<endl;
-        for(int i=0; i<row; i++)
-            for(int j=0; j<col; j++)
-            cin>>mat[i][j];
-    }
-    void display()
-    {
-        for(int i=0; i<row; i++)
-        {
-            for(int j=0; j<col; j++)
-            {
-                cout<<mat[i][j]<<" ";
-            }
-            cout<<endl;
-        }
+        cout<<"Memory consumption:"<<endl<<"Total memory: "<<total<<" Bytes"<<endl;
     }
 };
-int Matrix::count_mat=0;
+int MemoryBlock::total=0;
+
 int main()
 {
-    int r,c;
-    cout<<"Enter row and col:"<<endl;
-    cin>>r>>c;
-    Matrix m1(r,c);
-    m1.input();
-    m1.display();
-    Matrix m2(m1);
-    m2.display();
+
+    int a,b;
+    cout<<"Enter size of 2 memory blocks:"<<endl;
+    cin>>a>>b;
+    MemoryBlock m1(a);
+    MemoryBlock::showMemoryUsage();
+    m1.showMemoryUsage();
+    MemoryBlock m2(b);
+    m2.showMemoryUsage();
 
 }
 
