@@ -1,9 +1,9 @@
 /*
  Create a Matrix in C++ class that:
- Uses a parameterized constructor to dynamically allocate a 2D matrix of size r × c.
- Implements a copy constructor for deep copying.
- Uses a destructor to deallocate memory and print a message.
- Uses a static counter to track the number of active matrices.
+     1. Uses a parameterized constructor to dynamically allocate a 2D matrix of size r × c.
+     2. Implements a copy constructor for deep copying.
+     3. Uses a destructor to deallocate memory and print a message.
+     4. Uses a static counter to track the number of active matrices.
  */
 
 #include <bits/stdc++.h>
@@ -58,6 +58,7 @@ class Matrix {
             for (int i = 0; i < r; i++) delete[] arr[i];
             delete[] arr;
             active--;
+            cout << "Destructor executes.\n";
         }
 
 };
@@ -70,4 +71,5 @@ int main() {
     Matrix m2(3, 4);
     m2.print();
 }
+
 
