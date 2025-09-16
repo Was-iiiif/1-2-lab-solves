@@ -40,7 +40,9 @@ public:
     }
 
 };
+
     double Result::h_avg=0.00;
+
     int main()
     {
         Result::get_h_avg();
@@ -69,9 +71,6 @@ public:
         cout<<"New Average: "<<r2.get_h_avg()<<endl;
         Result r3(m3,s3);
         cout<<"New Average: "<<r3.get_h_avg()<<endl;
-
-
-
-
     }
+
 
