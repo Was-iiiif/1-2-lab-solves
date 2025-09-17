@@ -1,89 +1,75 @@
-/*Create a Matrix in C++ class that:
- Uses a parameterized constructor to dynamically allocate a 2D matrix of size r × c.
- Implements a copy constructor for deep copying.
- Uses a destructor to deallocate memory and print a message.
- Uses a static counter to track the number of active matrices.*/
+/*
+ Create a Matrix in C++ class that:
+     1. Uses a parameterized constructor to dynamically allocate a 2D matrix of size r Ã— c.
+     2. Implements a copy constructor for deep copying.
+     3. Uses a destructor to deallocate memory and print a message.
+     4. Uses a static counter to track the number of active matrices.
+ */
 
- #include<bits/stdc++.h>
- using namespace std;
- class Matrix{
- int **mat;
- int row;
- int col;
- static int count_mat;
- public:
- Matrix(int a, int b)
- {
- row=a;
- col=b;
- mat=new int *[row];
- for(int i=0; i<row; i++)
- mat[i]=new int[col];
- for(int i=0; i<row; i++)
- {
- for(int j=0; j<col; j++)
- {
- mat[i][j]=0;
- }
- }
- count_mat++;
- cout<<"Matrix Created"<<endl<<"Active Matrix count: "<<count_mat<<endl;
+#include <bits/stdc++.h>
+using namespace std;
 
- }
- Matrix(Matrix &x)
- {
- row=x.row;
- col=x.col;
- mat=new int *[row];
- for(int i=0; i<row; i++)
- mat[i]=new int[col];
- for(int i=0; i<row; i++)
- {
- for(int j=0; j<col; j++)
- {
- mat[i][j]=x.mat[i][j];
- }
- }
- count_mat++;
- cout<<"Copy Matrix Created"<<endl<<"Active Matrix count: "<<count_mat<<endl;
- }
- ~Matrix()
- {
- for(int i=0; i<row; i++)
- delete[]mat[i];
- delete[]mat;
- count_mat--;
- cout<<"Matrix Deleted"<<endl<<"Active Matrix count: "<<count_mat<<endl;
- }
- void input()
- {
- cout<<"Enter elements:"<<endl;
- for(int i=0; i<row; i++)
- for(int j=0; j<col; j++)
- cin>>mat[i][j];
- }
- void display()
- {
- for(int i=0; i<row; i++)
- {
- for(int j=0; j<col; j++)
- {
- cout<<mat[i][j]<<" ";
- }
- cout<<endl;
- }
- }
- };
- int Matrix::count_mat=0;
- int main()
-{
- int r,c;
- cout<<"Enter row and col:"<<endl;
- cin>>r>>c;
- Matrix m1(r,c);
- m1.input();
- m1.display();
- Matrix m2(m1);
- m2.display();
+class Matrix {
+    static int active;
 
- }
+    public :
+        int r, c;
+        int **arr;
+
+        Matrix (int r, int c) {
+            this->r = r;
+            this->c = c;
+            active++;
+
+            arr = new int* [r];
+            for (int i = 0; i < r; i++) arr[i] = new int[c];
+
+            for (int i = 0; i < r; i++) {
+                for (int j = 0; j < c; j++) {
+                    arr[i][j] = i + j;
+                }
+            }
+        }
+
+        Matrix (Matrix &dummy) {
+            this->r = dummy.r;
+            this->c = dummy.c;
+
+            arr = new int* [r];
+            for (int i = 0; i < r; i++) arr[i] = new int[c];
+
+            for (int i = 0; i < r; i++) {
+                for (int j = 0; j < c; j++) {
+                    this->arr[i][j] = dummy.arr[i][j];
+                }
+            }
+        }
+
+        void print() {
+            for (int i = 0; i < r; i++) {
+                for (int j = 0; j < c; j++) {
+                    cout << arr[i][j] << " ";
+                }
+                cout << endl;
+            }
+        }
+
+        ~Matrix() {
+            for (int i = 0; i < r; i++) delete[] arr[i];
+            delete[] arr;
+            active--;
+            cout << "Destructor executes.\n";
+        }
+
+};
+int Matrix :: active;
+
+int main() {
+    Matrix m1(2, 3);
+    m1.print();
+
+    Matrix m2(3, 4);
+    m2.print();
+}
+
+
