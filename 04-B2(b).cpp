@@ -2,6 +2,7 @@
 Design a multilevel inheritance where Person -> Employee -> Manager.
 Store general, job and managerial details,
 and implement a conversion operator that converts a Manager object into a double representing the total salary.
+SOLVED BY SHUVO 2307106
 */
 
 #include <bits/stdc++.h>
