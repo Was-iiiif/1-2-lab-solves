@@ -1,46 +1,63 @@
-/*
-Design a multilevel inheritance where Person -> Employee -> Manager.
-Store general, job and managerial details,
-and implement a conversion operator that converts a Manager object into a double representing the total salary.
-SOLVED BY SHUVO 2307106
-*/
-
-#include <bits/stdc++.h>
+/*Implement a multilevel inheritance chain Time-> Time24-> Time12. Demonstrate conversion by implementing a type conversion operator from Time24 to Time12 format, and test it in main.*/
+#include<bits/stdc++.h>
 using namespace std;
 
-class Person {
-protected :
-    string name;
-public :
-    Person (string name) : name(name) {}
+class Time{
+protected:
+    int hour, minute;
+public:
+    Time(int a=0,int b=0):hour(a), minute(b){}
 };
 
-class Employee : public Person{
-protected :
-    int working_hours;
-public :
-    Employee (string name, int working_hours) : Person(name), working_hours(working_hours) {}
-};
-
-class Manager : public Employee{
-protected :
-    double salary;
-public :
-    Manager (string name, int working_hours, double salary) : Employee (name, working_hours), salary(salary) {}
-
-    void display() {
-        cout << name << " is a Manager, who works for " << working_hours << " hours everyday and earns " << salary << " tk per month.\n";
+class Time24:public Time{
+public:
+    Time24(int a=0, int b=0):Time(a,b){}
+    void display()
+    {
+        cout<<"Time in 24 hr format: "<<setfill('0')<<setw(2)<<hour<<":"<<minute<<endl;
     }
-    operator double() const {
-        return salary;
-    }
+    operator class Time12();
 };
 
-int main() {
-    Manager m("Addib", 8, 40000.50);
-
-    m.display();
-    cout << "Salary output using type conversion : " << (double)m << endl;
-    return 0;
+class Time12: public Time24{
+protected:
+    string period;
+public:
+    Time12(int a=0, int b=0, string p="AM"):Time24(a,b), period(p){}
+    void display()
+    {
+        cout<<"Time in 12 hr format: "<<setfill('0')<<setw(2)<<hour<<":"<<minute<<" "<<period<<endl;
+    }
+};
+Time24::operator Time12()
+{
+    int h;
+    string p="AM";
+    if(hour==0)
+    {
+        h=12;
+        p="AM";
+    }
+    else if(hour>12)
+    {
+        h=hour%12;
+        p="PM";
+    }
+    else if(h==12)
+    {
+        h=12;
+        p="PM";
+    }
+    return Time12(h, minute, p);
 }
-
+int main()
+{
+    int a,b;
+    cout<<"Enter hour and minute:"<<endl;
+    cin>>a>>b;
+    Time24 t1(a,b);
+    Time12 t2;
+    t2=t1;
+    t1.display();
+    t2.display();
+}
