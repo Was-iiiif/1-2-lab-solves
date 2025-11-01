@@ -1,4 +1,4 @@
-/*1. Construct a hospital billing program using virtual functions where the General (G) and Surgery (S) departments charge $500 and $2000 per patient, respectively. The system must calculate the hospital’s total revenue.
+/*1. Construct a hospital billing program using virtual functions where the General (G) and Surgery (S) departments charge $500 and $2000 per patient, respectively. The system must calculate the hospitalâ€™s total revenue.
 Input: Number of departments n, followed by n lines of type and number of patients.
 Output: Total revenue.*/
 
@@ -45,7 +45,12 @@ int main()
     General g(n,a);
     Surgery s(n,b);
     int sum=0;
-    sum=g.total()+s.total();
+    int*ptr;
+    ptr=&g;
+    sum+=ptr->total();
+    ptr=&s;
+    sum+=ptr->total();
     cout<<sum<<endl;
 
 }
+
